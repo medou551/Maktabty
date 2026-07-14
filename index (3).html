@@ -1,3 +1,133 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المكتبة — فهرس الكتب</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --parchment: #EDE6D6;
+    --ink: #241D14;
+    --ink-soft: #4A4232;
+    --gold: #A9782F;
+    --teal: #1F4E4C;
+    --rubric: #8B3A3A;
+    --line: #C9BFA5;
+    --paper-card: #F5F0E4;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  body{
+    background:
+      radial-gradient(ellipse at 15% 0%, rgba(169,120,47,0.07), transparent 45%),
+      radial-gradient(ellipse at 85% 100%, rgba(31,78,76,0.06), transparent 45%),
+      var(--parchment);
+    color: var(--ink);
+    font-family: 'Cairo', sans-serif;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  header.top{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 22px clamp(20px, 5vw, 64px);
+    border-bottom: 1px solid var(--line);
+    flex-wrap: wrap; gap:16px;
+  }
+  .brand{ display:flex; align-items:center; gap:14px; }
+  .brand-mark{
+    width:40px; height:40px; border:1.5px solid var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Amiri', serif; font-size:20px; font-weight:700;
+    transform: rotate(45deg); flex-shrink:0;
+  }
+  .brand-mark span{ transform: rotate(-45deg); }
+  .brand-text h1{ font-family:'Amiri', serif; font-size: 22px; font-weight:700; }
+  .brand-text p{ font-size:12px; color: var(--ink-soft); letter-spacing:0.5px; }
+  .search-wrap{ position:relative; width: min(360px, 90vw); }
+  #search{
+    width:100%; padding:11px 44px 11px 16px;
+    background: var(--paper-card); border:1px solid var(--line); border-radius: 2px;
+    font-family:'Cairo', sans-serif; font-size:14px; color:var(--ink); outline:none;
+    transition: border-color .2s;
+  }
+  #search:focus{ border-color: var(--gold); }
+  .search-wrap::before{
+    content:"🔍"; position:absolute; right:14px; top:50%; transform:translateY(-50%);
+    font-size:13px; opacity:0.55;
+  }
+
+  .hero{ padding: clamp(40px,7vw,72px) clamp(20px,5vw,64px) clamp(32px,5vw,48px); text-align:center; }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:3px;
+    color: var(--gold); text-transform:uppercase;
+  }
+  .hero h2{
+    font-family:'Amiri', serif; font-weight:700; font-size: clamp(30px, 5.5vw, 56px);
+    margin: 16px 0 12px; line-height:1.3;
+  }
+  .hero h2 em{ font-style:italic; color: var(--teal); }
+  .hero p.sub{ max-width: 640px; margin: 0 auto; color: var(--ink-soft); font-size:15.5px; }
+  .hero-divider{
+    display:flex; align-items:center; justify-content:center; gap:14px;
+    margin-top: 26px; color: var(--ink-soft); font-size:12px;
+  }
+  .hero-divider .bar{ width:60px; height:1px; background:var(--line); }
+
+  nav.toc{ position: sticky; top:0; z-index:10; background: var(--parchment); border-bottom:1px solid var(--line); }
+  .toc-group-label{
+    font-family:'JetBrains Mono', monospace; font-size:10px; letter-spacing:2px;
+    color: var(--ink-soft); text-align:center; padding: 8px 12px 0;
+  }
+  .toc-row{
+    display:flex; flex-wrap:wrap; justify-content:center; border-top:1px solid var(--line);
+  }
+  .toc-row:first-of-type{ border-top:none; }
+  .toc-btn{
+    font-family:'Cairo', sans-serif; font-weight:600; font-size:13px;
+    padding: 11px 16px; background:none; border:none; cursor:pointer;
+    color: var(--ink-soft); border-left:1px solid var(--line);
+    position:relative; transition: color .2s, background .2s; white-space:nowrap;
+  }
+  .toc-btn:first-child{ border-left:none; }
+  .toc-btn:hover{ color: var(--ink); background: rgba(169,120,47,0.06); }
+  .toc-btn.active{ color: var(--ink); background: var(--paper-card); }
+  .toc-btn.active::after{
+    content:""; position:absolute; bottom:-1px; left:0; right:0; height:2px; background: var(--gold);
+  }
+  .toc-btn .count{ font-family:'JetBrains Mono', monospace; font-size:10px; color: var(--gold); margin-inline-start:5px; }
+
+  main{ max-width: 1140px; margin: 0 auto; padding: 36px 20px 100px; }
+  .section-group{ margin-bottom: 52px; }
+  .group-head{
+    display:flex; align-items:baseline; gap:16px; margin-bottom:6px;
+    padding-bottom:10px; border-bottom: 1px solid var(--line);
+  }
+  .group-head .num{ font-family:'Amiri', serif; font-size:15px; color:var(--gold); font-weight:700; }
+  .group-head h3{ font-family:'Amiri', serif; font-size: 23px; font-weight:700; }
+  .group-head p{ font-size:12px; color: var(--ink-soft); margin-inline-start:auto; }
+  .group-intro{ font-size:13.5px; color: var(--ink-soft); max-width:760px; margin: 12px 0 22px; line-height:1.9; }
+
+  .grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 16px; }
+
+  .card{
+    background: var(--paper-card); border: 1px solid var(--line);
+    padding: 17px 17px 15px; display:flex; flex-direction:column; gap:9px;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .card:hover{ transform: translateY(-3px); box-shadow: 0 10px 24px rgba(36,29,20,0.10); border-color: var(--gold); }
+  .card .tag{
+    align-self:flex-start; font-family:'JetBrains Mono', monospace; font-size:10px; letter-spacing:.5px;
+    padding: 3px 9px; border:1px solid currentColor; border-radius:20px;
+  }
+  .tag.relig{ color: var(--gold); }
+  .tag.tech{ color: var(--teal); }
+
+  .card h4{ font-family:'Amiri', serif; font-size: 17px; font-weight:700; line-height:1.4; }
+  .card .author{ font-size: 12px; color: var(--ink-soft); }
   .card .desc{
     font-size: 12px; color: var(--ink-soft); line-height:1.85;
     display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
@@ -105,7 +235,7 @@ const BOOKS = [
 
 /* ---------------- السيرة النبوية ---------------- */
 {title:"الرحيق المختوم",author:"صفي الرحمن المباركفوري",desc:"سيرة نبوية فازت بالجائزة الأولى في مسابقة رابطة العالم الإسلامي، تجمع الدقة العلمية بأسلوب سردي سلس.",section:"sira",group:"relig",url:"https://archive.org/details/sealed_nectar"},
-{title:"السيرة النبوية لابن هشام",author:"ابن هشام",desc:"تهذيب لسيرة ابن إسحاق، من أقدم وأوثق مصادر السيرة النبوية.",section:"sira",group:"relig",url:"#"},
+{title:"السيرة النبوية لابن هشام",author:"ابن هشام",desc:"تهذيب لسيرة ابن إسحاق، من أقدم وأوثق مصادر السيرة النبوية.",section:"sira",group:"relig",url:"https://archive.org/details/Sirat_Ibn_Hisham"},
 {title:"السيرة النبوية",author:"ابن إسحاق",desc:"أقدم تدوين متكامل لسيرة النبي ﷺ، وصل إلينا عبر رواية ابن هشام أساسًا.",section:"sira",group:"relig",url:"#"},
 {title:"الشمائل المحمدية",author:"الترمذي",desc:"جمع لصفات النبي ﷺ الخَلقية والخُلقية من الأحاديث الصحيحة.",section:"sira",group:"relig",url:"#"},
 {title:"زاد المعاد في هدي خير العباد",author:"ابن القيم الجوزية",desc:"موسوعة في السيرة والفقه المستمد من هدي النبي ﷺ في شؤون حياته كافة.",section:"sira",group:"relig",url:"#"},
@@ -126,7 +256,510 @@ const BOOKS = [
 {title:"عقيلة أتراب القصائد في رسم المصاحف",author:"الإمام الشاطبي",desc:"متن في علم رسم المصحف العثماني، مكمّل لعلم القراءات.",section:"matn",group:"relig",url:"#"},
 
 /* ---------------- الفقه المالكي وأصوله ---------------- */
-{title:"الموطأ",author:"الإمام مالك بن أنس",desc:"أصل مذهب المالكية، وأقدم كتب الحديث والفقه المدوّنة، يجمع بين الحديث النبوي وفقه أهل المدينة.",section:"maliki",group:"relig",url:"#"},
+{title:"الموطأ",author:"الإمام مالك بن أنس",desc:"أصل مذهب المالكية، وأقدم كتب الحديث والفقه المدوّنة، يجمع بين الحديث النبوي وفقه أهل المدينة.",section:"maliki",group:"relig",url:"https://archive.org/details/MuwattaImamMalik_201904"},
+{title:"المدونة الكبرى",author:"رواية سحنون عن ابن القاسم عن مالك",desc:"الأصل الثاني بعد الموطأ في المذهب المالكي، تجمع مسائل الإمام مالك المروية عن تلاميذه.",section:"maliki",group:"relig",url:"#"},
+{title:"الرسالة",author:"ابن أبي زيد القيرواني",desc:"من أوائل وأشهر مختصرات الفقه المالكي، اعتمد عليها التعليم في المغرب الإسلامي قرونًا طويلة.",section:"maliki",group:"relig",url:"#"},
+{title:"متن ابن عاشر — المرشد المعين",author:"عبد الواحد بن عاشر",desc:"منظومة تجمع العقيدة والفقه المالكي والتصوف، من أشهر المتون تدريسًا في المغرب وموريتانيا وغرب إفريقيا.",section:"maliki",group:"relig",url:"https://archive.org/details/IbnAsherVer3"},
+{title:"مختصر خليل",author:"خليل بن إسحاق الجندي",desc:"أشهر متون الفقه المالكي على الإطلاق، اعتمده أغلب فقهاء المذهب المتأخرين شرحًا وحفظًا.",section:"maliki",group:"relig",url:"https://shamela.ws/book/11355"},
+{title:"التوضيح شرح مختصر ابن الحاجب",author:"خليل بن إسحاق الجندي",desc:"شرح خليل لمختصر ابن الحاجب الفرعي، من أوسع كتب الفقه المالكي المقارن.",section:"maliki",group:"relig",url:"#"},
+{title:"الشرح الكبير على مختصر خليل",author:"أحمد الدردير",desc:"من أشهر شروح مختصر خليل، عليه اعتمد أغلب متأخري المالكية في مصر والمغرب.",section:"maliki",group:"relig",url:"#"},
+{title:"حاشية الدسوقي على الشرح الكبير",author:"محمد عرفة الدسوقي",desc:"حاشية دقيقة على شرح الدردير، من أهم مراجع التحقيق في الفقه المالكي المتأخر.",section:"maliki",group:"relig",url:"#"},
+{title:"منح الجليل شرح مختصر خليل",author:"محمد عليش",desc:"شرح موسّع لمختصر خليل، معروف بجمعه واستيعابه لأقوال المذهب.",section:"maliki",group:"relig",url:"#"},
+{title:"أقرب المسالك لمذهب الإمام مالك",author:"أحمد الدردير",desc:"مختصر ميسّر لفقه المذهب المالكي، غالبًا ما يُدرَّس مع شرحه الصغير للدردير.",section:"maliki",group:"relig",url:"#"},
+{title:"الشرح الصغير على أقرب المسالك",author:"أحمد الدردير",desc:"شرح الدردير لمختصره أقرب المسالك، مع حاشية الصاوي الشهيرة عليه.",section:"maliki",group:"relig",url:"#"},
+{title:"بداية المجتهد ونهاية المقتصد",author:"ابن رشد الحفيد",desc:"كتاب فقه مقارن يذكر أدلة المذاهب وأسباب الخلاف، مرجع مهم لفقهاء المالكية وغيرهم.",section:"maliki",group:"relig",url:"#"},
+{title:"عقد الجواهر الثمينة",author:"ابن شاس",desc:"من أوائل كتب الفقه المالكي المرتبة على طريقة الفقهاء المتأخرين، وأثّر في تبويب مختصر خليل.",section:"maliki",group:"relig",url:"#"},
+{title:"التلقين في الفقه المالكي",author:"القاضي عبد الوهاب البغدادي",desc:"مختصر فقهي مالكي مشهور في المشرق، من أوائل ما يُحفظ في المذهب.",section:"maliki",group:"relig",url:"#"},
+{title:"الكافي في فقه أهل المدينة",author:"ابن عبد البر",desc:"مختصر جامع لفقه المذهب المالكي، ألّفه ابن عبد البر ليكون تذكرة لطالب العلم.",section:"maliki",group:"relig",url:"#"},
+{title:"القوانين الفقهية",author:"ابن جزي الكلبي",desc:"مختصر واضح ومنظم لفقه المذهب المالكي، سهل التناول لطلاب العلم المبتدئين.",section:"maliki",group:"relig",url:"#"},
+{title:"الموافقات في أصول الشريعة",author:"الإمام الشاطبي",desc:"أهم كتاب في مقاصد الشريعة، ألّفه إمام مالكي أسّس لفهم مقاصدي عميق لأصول الفقه.",section:"maliki",group:"relig",url:"#"},
+{title:"الاعتصام",author:"الإمام الشاطبي",desc:"دراسة أصولية في البدعة والاتباع، لصاحب الموافقات، من أبرز فقهاء المالكية الأصوليين.",section:"maliki",group:"relig",url:"#"},
+{title:"إحكام الفصول في أحكام الأصول",author:"أبو الوليد الباجي",desc:"من أوائل مصنفات أصول الفقه عند المالكية، لعالم أندلسي بارز في الأصول والحديث.",section:"maliki",group:"relig",url:"#"},
+{title:"تنقيح الفصول في اختصار المحصول",author:"شهاب الدين القرافي",desc:"اختصار مالكي لكتاب الرازي في أصول الفقه، من أهم مصادر الأصول عند المتأخرين.",section:"maliki",group:"relig",url:"#"},
+{title:"الفروق (أنوار البروق في أنواء الفروق)",author:"شهاب الدين القرافي",desc:"كتاب فريد يفرّق بين المسائل الفقهية المتشابهة ظاهرًا، من أدق ما أُلّف في الفقه المالكي.",section:"maliki",group:"relig",url:"#"},
+{title:"مراقي السعود",author:"عبد الله بن الحاج إبراهيم العلوي الشنقيطي",desc:"منظومة موريتانية شهيرة في أصول الفقه المالكي، من أكثر المتون تداولًا في المحاظر بغرب إفريقيا.",section:"maliki",group:"relig",url:"#"},
+{title:"نشر البنود على مراقي السعود",author:"محمد يحيى الولاتي",desc:"من أشهر شروح مراقي السعود، اعتمده طلبة العلم في موريتانيا وغرب إفريقيا مرجعًا أساسيًا.",section:"maliki",group:"relig",url:"#"},
+
+/* ---------------- الشعر العربي ---------------- */
+{title:"المعلقات العشر",author:"شعراء الجاهلية",desc:"أشهر القصائد العربية قبل الإسلام، لشعراء مثل امرئ القيس وعنترة وزهير.",section:"shiir",group:"relig",url:"https://www.aldiwan.net/Poems-Topics-%D8%A7%D9%84%D9%85%D8%B9%D9%84%D9%82%D8%A7%D8%AA.html"},
+{title:"ديوان امرئ القيس",author:"امرؤ القيس",desc:"لصاحب معلقة \"قفا نبك\"، يُعد أول من فتح فنون الوصف في الشعر الجاهلي.",section:"shiir",group:"relig",url:"https://www.aldiwan.net/cat-poet-imru-alqays"},
+{title:"ديوان عنترة بن شداد",author:"عنترة بن شداد",desc:"شعر الفروسية والحب الجاهلي، لصاحب قصة عنترة وعبلة الشهيرة.",section:"shiir",group:"relig",url:"https://www.aldiwan.net/cat-poet-antar-bin-shaddad"},
+{title:"ديوان زهير بن أبي سلمى",author:"زهير بن أبي سلمى",desc:"شعر الحكمة الجاهلي، اشتهر بتنقيح شعره وتسميته بـ\"الحوليات\".",section:"shiir",group:"relig",url:"https://www.aldiwan.net/cat-poet-zuhair-bin-abi-salma"},
+{title:"ديوان طرفة بن العبد",author:"طرفة بن العبد",desc:"من أصحاب المعلقات، اشتهر بوصف الناقة والفخر رغم قصر عمره.",section:"shiir",group:"relig",url:"https://www.aldiwan.net/cat-poet-tarafa-ibn-al-abd"},
+{title:"ديوان المتنبي",author:"أبو الطيب المتنبي",desc:"أعظم شعراء العربية عند كثير من النقاد، يجمع الحكمة والفخر بلغة محكمة.",section:"shiir",group:"relig",url:"https://www.aldiwan.net/cat-poet-Mutanabi"},
+{title:"ديوان أبي تمام",author:"أبو تمام",desc:"رائد المذهب البديعي في الشعر العباسي، صاحب كتاب الحماسة المختار.",section:"shiir",group:"relig",url:"#"},
+{title:"ديوان البحتري",author:"الوليد بن عبيد البحتري",desc:"شعر عباسي رقيق يمثل مدرسة الطبع مقابل مدرسة الصنعة عند أبي تمام.",section:"shiir",group:"relig",url:"https://www.aldiwan.net/cat-poet-albohtry"},
+{title:"ديوان أبي نواس",author:"أبو نواس",desc:"شاعر عباسي مجدد، اشتهر بشعر الخمريات والوصف الحسي الجريء.",section:"shiir",group:"relig",url:"https://www.aldiwan.net/cat-poet-abu-nawas"},
+{title:"سقط الزند واللزوميات",author:"أبو العلاء المعري",desc:"شعر فلسفي متشائم عميق، يعكس رؤية المعري النقدية للحياة والدين.",section:"shiir",group:"relig",url:"#"},
+{title:"ديوان جرير",author:"جرير بن عطية",desc:"طرف من نقائض جرير والفرزدق، من أشهر مساجلات الشعر الأموي.",section:"shiir",group:"relig",url:"#"},
+{title:"ديوان الفرزدق",author:"همام بن غالب الفرزدق",desc:"شعر الفخر والهجاء الأموي، خصم جرير في أشهر نقائض العربية.",section:"shiir",group:"relig",url:"#"},
+{title:"كتاب الأغاني",author:"أبو الفرج الأصفهاني",desc:"موسوعة أدبية تجمع أخبار الشعراء والمغنين العرب وأشعارهم منذ الجاهلية.",section:"shiir",group:"relig",url:"#"},
+
+/* ---------------- برمجة الويب ---------------- */
+{title:"Eloquent JavaScript",author:"Marijn Haverbeke",desc:"مدخل عميق للغة JavaScript من الأساسيات إلى البرمجة غير المتزامنة والمتصفح.",section:"webdev",group:"tech",url:"https://eloquentjavascript.net/"},
+{title:"You Don't Know JS",author:"Kyle Simpson",desc:"سلسلة تشرح تفاصيل JavaScript الدقيقة التي يتجاهلها أغلب المطورين.",section:"webdev",group:"tech",url:"#"},
+{title:"HTML and CSS: Design and Build Websites",author:"Jon Duckett",desc:"مدخل بصري وواضح لتصميم صفحات الويب باستخدام HTML وCSS.",section:"webdev",group:"tech",url:"#"},
+{title:"Learning React",author:"Alex Banks & Eve Porcello",desc:"دليل عملي لبناء واجهات المستخدم بمكتبة React الحديثة.",section:"webdev",group:"tech",url:"#"},
+{title:"CSS: The Definitive Guide",author:"Eric Meyer",desc:"مرجع شامل لكل تفاصيل تنسيق الصفحات بلغة CSS.",section:"webdev",group:"tech",url:"#"},
+{title:"Node.js Design Patterns",author:"Mario Casciaro",desc:"أنماط تصميم احترافية لبناء تطبيقات خادم قابلة للتوسع بـ Node.js.",section:"webdev",group:"tech",url:"#"},
+{title:"Don't Make Me Think",author:"Steve Krug",desc:"مرجع كلاسيكي في تجربة المستخدم وسهولة استخدام مواقع الويب.",section:"webdev",group:"tech",url:"#"},
+
+/* ---------------- برمجة الموبايل ---------------- */
+{title:"Android Programming: The Big Nerd Ranch Guide",author:"Bill Phillips & Chris Stewart",desc:"دليل شامل ومنهجي لتعلم تطوير تطبيقات أندرويد من الصفر.",section:"mobiledev",group:"tech",url:"#"},
+{title:"iOS Programming: The Big Nerd Ranch Guide",author:"Christian Keur & Aaron Hillegass",desc:"مدخل عملي لتطوير تطبيقات iOS بلغة Swift وإطار UIKit.",section:"mobiledev",group:"tech",url:"#"},
+{title:"Flutter in Action",author:"Eric Windmill",desc:"دليل عملي لبناء تطبيقات موبايل متعددة المنصات بإطار Flutter.",section:"mobiledev",group:"tech",url:"#"},
+{title:"React Native in Action",author:"Nader Dabit",desc:"شرح عملي لبناء تطبيقات موبايل باستخدام React Native.",section:"mobiledev",group:"tech",url:"#"},
+{title:"Kotlin for Android Developers",author:"Antonio Leiva",desc:"مدخل لاستخدام لغة Kotlin الحديثة في تطوير تطبيقات أندرويد.",section:"mobiledev",group:"tech",url:"#"},
+{title:"Programming iOS",author:"Matt Neuburg",desc:"مرجع متعمق في أساسيات وتفاصيل بناء تطبيقات iOS.",section:"mobiledev",group:"tech",url:"#"},
+
+/* ---------------- الشبكات ---------------- */
+{title:"Computer Networking: A Top-Down Approach",author:"Kurose & Ross",desc:"من أشهر مراجع تعليم الشبكات، يشرح الطبقات من التطبيق نزولًا للمادي.",section:"network",group:"tech",url:"#"},
+{title:"TCP/IP Illustrated",author:"W. Richard Stevens",desc:"شرح تفصيلي مصوّر لبروتوكولات TCP/IP وآلية عملها الداخلية.",section:"network",group:"tech",url:"#"},
+{title:"Computer Networks",author:"Andrew S. Tanenbaum",desc:"مرجع أكاديمي كلاسيكي شامل في مبادئ وهندسة الشبكات الحاسوبية.",section:"network",group:"tech",url:"#"},
+{title:"Network Warrior",author:"Gary A. Donahue",desc:"دليل عملي موجه لمهندسي الشبكات في البيئات الحقيقية والمعدات الفعلية.",section:"network",group:"tech",url:"#"},
+{title:"CCNA Routing and Switching Study Guide",author:"Todd Lammle",desc:"مرجع تحضيري لشهادة CCNA من سيسكو في التوجيه والتبديل.",section:"network",group:"tech",url:"#"},
+
+/* ---------------- الأمن السيبراني ---------------- */
+{title:"The Web Application Hacker's Handbook",author:"Dafydd Stuttard & Marcus Pinto",desc:"مرجع أساسي في اكتشاف واستغلال ثغرات تطبيقات الويب.",section:"cyber",group:"tech",url:"#"},
+{title:"Hacking: The Art of Exploitation",author:"Jon Erickson",desc:"مدخل عميق لمبادئ الاستغلال البرمجي من منظور تقني تفصيلي.",section:"cyber",group:"tech",url:"#"},
+{title:"The Art of Deception",author:"Kevin Mitnick",desc:"كتاب عن الهندسة الاجتماعية وأساليب خداع البشر لاختراق الأنظمة.",section:"cyber",group:"tech",url:"#"},
+{title:"Applied Cryptography",author:"Bruce Schneier",desc:"مرجع شامل في خوارزميات التشفير وتطبيقاتها العملية.",section:"cyber",group:"tech",url:"#"},
+{title:"Security Engineering",author:"Ross Anderson",desc:"نظرة موسّعة لهندسة الأنظمة الآمنة عبر مختلف المجالات التقنية.",section:"cyber",group:"tech",url:"#"},
+{title:"Practical Malware Analysis",author:"Michael Sikorski & Andrew Honig",desc:"دليل عملي لتحليل البرمجيات الخبيثة بالأدوات الاحترافية.",section:"cyber",group:"tech",url:"#"},
+
+/* ---------------- الرياضيات ---------------- */
+{title:"Calculus",author:"James Stewart",desc:"من أشهر مراجع تعليم التفاضل والتكامل بأسلوب تدريجي وتطبيقات واسعة.",section:"math",group:"tech",url:"#"},
+{title:"Linear Algebra and Its Applications",author:"Gilbert Strang",desc:"مرجع أساسي في الجبر الخطي وتطبيقاته في العلوم والهندسة.",section:"math",group:"tech",url:"#"},
+{title:"Discrete Mathematics and Its Applications",author:"Kenneth Rosen",desc:"مرجع شامل في الرياضيات المتقطعة، أساس علوم الحاسوب النظرية.",section:"math",group:"tech",url:"#"},
+{title:"A First Course in Abstract Algebra",author:"John B. Fraleigh",desc:"مدخل للجبر المجرد: الزمر والحلقات والحقول.",section:"math",group:"tech",url:"#"},
+{title:"How to Prove It",author:"Daniel Velleman",desc:"مدخل لتعلم منهجية البرهان الرياضي والتفكير المنطقي الصارم.",section:"math",group:"tech",url:"#"},
+
+/* ---------------- الفيزياء ---------------- */
+{title:"Fundamentals of Physics",author:"Halliday, Resnick & Walker",desc:"مرجع جامعي شامل يغطي الميكانيكا والكهرومغناطيسية والفيزياء الحديثة.",section:"physics",group:"tech",url:"#"},
+{title:"The Feynman Lectures on Physics",author:"Richard Feynman",desc:"محاضرات فاينمان الشهيرة، تجمع العمق العلمي بأسلوب شرح فريد وممتع.",section:"physics",group:"tech",url:"https://www.feynmanlectures.caltech.edu/"},
+{title:"Introduction to Electrodynamics",author:"David J. Griffiths",desc:"مرجع معياري في الكهروديناميكا للمرحلة الجامعية.",section:"physics",group:"tech",url:"#"},
+{title:"A Brief History of Time",author:"Stephen Hawking",desc:"عرض مبسط لمفاهيم الكون والزمن والنسبية موجّه للقارئ العام.",section:"physics",group:"tech",url:"#"},
+{title:"Thermal Physics",author:"Charles Kittel",desc:"مرجع في الديناميكا الحرارية والفيزياء الإحصائية.",section:"physics",group:"tech",url:"#"},
+
+/* ---------------- الذكاء الاصطناعي ---------------- */
+{title:"Artificial Intelligence: A Modern Approach",author:"Stuart Russell & Peter Norvig",desc:"المرجع الأكاديمي الأشهر في الذكاء الاصطناعي، يغطي كل فروعه الأساسية.",section:"ai",group:"tech",url:"#"},
+{title:"Deep Learning",author:"Ian Goodfellow, Yoshua Bengio & Aaron Courville",desc:"مرجع معمّق في التعلم العميق والشبكات العصبية الحديثة.",section:"ai",group:"tech",url:"https://www.deeplearningbook.org/"},
+{title:"Pattern Recognition and Machine Learning",author:"Christopher Bishop",desc:"مرجع رياضي متعمق في أسس التعلم الآلي الاحتمالي.",section:"ai",group:"tech",url:"#"},
+{title:"Hands-On Machine Learning",author:"Aurélien Géron",desc:"دليل عملي لتعلم الآلة باستخدام Scikit-Learn وKeras وTensorFlow.",section:"ai",group:"tech",url:"#"},
+{title:"Speech and Language Processing",author:"Daniel Jurafsky & James H. Martin",desc:"مرجع شامل في معالجة اللغة الطبيعية والحوسبة اللغوية.",section:"ai",group:"tech",url:"#"},
+{title:"Reinforcement Learning: An Introduction",author:"Richard Sutton & Andrew Barto",desc:"المرجع الأساسي في التعلم المعزز، من الأسس إلى الخوارزميات الحديثة.",section:"ai",group:"tech",url:"#"},
+
+];
+
+/* ======================================================
+   الأقسام الفرعية — أضف قسمًا جديدًا هنا إذا احتجت لتصنيف إضافي
+   ====================================================== */
+const SECTIONS = [
+  { id:"quran",  label:"القرآن وقراءاته", group:"relig",
+    intro:"القرآن الكريم بالروايات العشرين المتواترة، وأشهر كتب التفسير وأحكام التجويد." },
+  { id:"sira",   label:"السيرة النبوية", group:"relig",
+    intro:"مصادر موثوقة في سيرة النبي محمد ﷺ، من أقدم المراجع التاريخية إلى أشهر الكتابات المعاصرة." },
+  { id:"matn",   label:"المتون العلمية", group:"relig",
+    intro:"المتون الشعرية التي بُنيت عليها علوم القراءات، حجر الأساس لمن أراد التخصص في هذا العلم." },
+  { id:"maliki", label:"الفقه المالكي وأصوله", group:"relig",
+    intro:"أصول المذهب المالكي من الموطأ والمدونة إلى أشهر مختصراته وشروحه، إلى جانب أهم مصنفات أصول الفقه عند المالكية." },
+  { id:"shiir",  label:"الشعر العربي", group:"relig",
+    intro:"عيون الشعر العربي القديم، من المعلقات الجاهلية إلى قمة الشعر العباسي." },
+  { id:"webdev", label:"برمجة الويب", group:"tech",
+    intro:"مراجع بناء المواقع من الأساسيات إلى أطر العمل الحديثة." },
+  { id:"mobiledev", label:"برمجة الموبايل", group:"tech",
+    intro:"مراجع تطوير تطبيقات الهاتف لأندرويد وiOS وأطر العمل متعددة المنصات." },
+  { id:"network", label:"الشبكات", group:"tech",
+    intro:"مراجع أساسيات ومبادئ الشبكات الحاسوبية والبروتوكولات." },
+  { id:"cyber",  label:"الأمن السيبراني", group:"tech",
+    intro:"مراجع الاختراق الأخلاقي وحماية الأنظمة والتشفير والاستجابة للحوادث." },
+  { id:"math",   label:"الرياضيات", group:"tech",
+    intro:"مراجع جامعية في التفاضل والتكامل والجبر والرياضيات المتقطعة." },
+  { id:"physics",label:"الفيزياء", group:"tech",
+    intro:"مراجع في الميكانيكا والكهرومغناطيسية والفيزياء الحديثة." },
+  { id:"ai",     label:"الذكاء الاصطناعي", group:"tech",
+    intro:"مراجع تعلم الآلة والتعلم العميق ومعالجة اللغة الطبيعية." },
+];
+
+const PAGE_SIZE = 12;
+let activeSection = "all";
+let query = "";
+let shownCounts = {};
+
+function toArabicDigits(n){
+  const d = ["٠","١","٢","٣","٤","٥","٦","٧","٨","٩"];
+  return String(n).split("").map(c => /[0-9]/.test(c) ? d[c] : c).join("");
+}
+
+function renderTOC(){
+  const totalRow = document.getElementById("toc-all");
+  const religRow = document.getElementById("toc-relig");
+  const techRow = document.getElementById("toc-tech");
+
+  totalRow.innerHTML = `<button class="toc-btn ${activeSection==='all'?'active':''}" data-section="all">
+    الكل <span class="count">${toArabicDigits(BOOKS.length)}</span></button>`;
+
+  function rowHTML(group){
+    return SECTIONS.filter(s=>s.group===group).map(s=>{
+      const count = BOOKS.filter(b=>b.section===s.id).length;
+      return `<button class="toc-btn ${activeSection===s.id?'active':''}" data-section="${s.id}">
+        ${s.label} <span class="count">${toArabicDigits(count)}</span></button>`;
+    }).join("");
+  }
+  religRow.innerHTML = rowHTML("relig");
+  techRow.innerHTML = rowHTML("tech");
+
+  document.querySelectorAll(".toc-btn").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      activeSection = btn.dataset.section;
+      renderTOC();
+      renderMain();
+    });
+  });
+}
+
+function matchesQuery(book){
+  if(!query) return true;
+  const q = query.trim();
+  return book.title.includes(q) || (book.author && book.author.includes(q)) || (book.desc && book.desc.includes(q));
+}
+
+function renderMain(){
+  const main = document.getElementById("main");
+  const sectionsToShow = activeSection === "all" ? SECTIONS : SECTIONS.filter(s=>s.id===activeSection);
+  let html = "";
+  let visibleTotal = 0;
+
+  sectionsToShow.forEach((s, idx)=>{
+    const allMatches = BOOKS.filter(b=>b.section===s.id && matchesQuery(b));
+    if(allMatches.length === 0 && query) return;
+    visibleTotal += allMatches.length;
+
+    const limit = query ? allMatches.length : (shownCounts[s.id] || PAGE_SIZE);
+    const books = allMatches.slice(0, limit);
+
+    html += `<div class="section-group">
+      <div class="group-head">
+        <span class="num">${toArabicDigits(idx+1)}</span>
+        <h3>${s.label}</h3>
+        <p>${toArabicDigits(allMatches.length)} كتاب</p>
+      </div>
+      ${s.intro ? `<p class="group-intro">${s.intro}</p>` : ``}
+      <div class="grid">`;
+
+    if(books.length === 0){
+      html += `<div class="empty-note">لا توجد كتب مطابقة بعد — أضِف كتبك في قائمة BOOKS.</div>`;
+    } else {
+      books.forEach(b=>{
+        const hasLink = b.url && b.url !== "#";
+        html += `<div class="card">
+          <span class="tag ${b.group}">${s.label}</span>
+          <h4>${b.title}</h4>
+          ${b.author ? `<div class="author">${b.author}</div>` : ``}
+          ${b.desc ? `<div class="desc">${b.desc}</div>` : ``}
+          <div class="foot">
+            <span class="meta">${hasLink ? "PDF" : "بانتظار الرابط"}</span>
+            ${hasLink
+              ? `<a class="dl" href="${b.url}" target="_blank" rel="noopener">تحميل ↓</a>`
+              : `<span class="dl" style="opacity:.4; cursor:default;">تحميل ↓</span>`}
+          </div>
+        </div>`;
+      });
+    }
+    html += `</div>`;
+
+    if(!query && allMatches.length > limit){
+      html += `<button class="load-more" data-load="${s.id}">تحميل المزيد</button>
+        <div class="shown-count">${toArabicDigits(limit)} من ${toArabicDigits(allMatches.length)}</div>`;
+    }
+    html += `</div>`;
+  });
+
+  if(query && visibleTotal === 0){
+    html = `<div class="empty-note" style="padding:60px 0;">لم يتم العثور على نتائج لـ "${query}"</div>`;
+  }
+
+  main.innerHTML = html;
+  document.getElementById("total-count").textContent = toArabicDigits(BOOKS.length) + " كتاب";
+
+  main.querySelectorAll(".load-more").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const id = btn.dataset.load;
+      shownCounts[id] = (shownCounts[id] || PAGE_SIZE) + PAGE_SIZE;
+      renderMain();
+    });
+  });
+}
+
+document.getElementById("search").addEventListener("input", (e)=>{
+  query = e.target.value;
+  renderMain();
+});
+
+renderTOC();
+renderMain();
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المكتبة — فهرس الكتب</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --parchment: #EDE6D6;
+    --ink: #241D14;
+    --ink-soft: #4A4232;
+    --gold: #A9782F;
+    --teal: #1F4E4C;
+    --rubric: #8B3A3A;
+    --line: #C9BFA5;
+    --paper-card: #F5F0E4;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  body{
+    background:
+      radial-gradient(ellipse at 15% 0%, rgba(169,120,47,0.07), transparent 45%),
+      radial-gradient(ellipse at 85% 100%, rgba(31,78,76,0.06), transparent 45%),
+      var(--parchment);
+    color: var(--ink);
+    font-family: 'Cairo', sans-serif;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  header.top{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 22px clamp(20px, 5vw, 64px);
+    border-bottom: 1px solid var(--line);
+    flex-wrap: wrap; gap:16px;
+  }
+  .brand{ display:flex; align-items:center; gap:14px; }
+  .brand-mark{
+    width:40px; height:40px; border:1.5px solid var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Amiri', serif; font-size:20px; font-weight:700;
+    transform: rotate(45deg); flex-shrink:0;
+  }
+  .brand-mark span{ transform: rotate(-45deg); }
+  .brand-text h1{ font-family:'Amiri', serif; font-size: 22px; font-weight:700; }
+  .brand-text p{ font-size:12px; color: var(--ink-soft); letter-spacing:0.5px; }
+  .search-wrap{ position:relative; width: min(360px, 90vw); }
+  #search{
+    width:100%; padding:11px 44px 11px 16px;
+    background: var(--paper-card); border:1px solid var(--line); border-radius: 2px;
+    font-family:'Cairo', sans-serif; font-size:14px; color:var(--ink); outline:none;
+    transition: border-color .2s;
+  }
+  #search:focus{ border-color: var(--gold); }
+  .search-wrap::before{
+    content:"🔍"; position:absolute; right:14px; top:50%; transform:translateY(-50%);
+    font-size:13px; opacity:0.55;
+  }
+
+  .hero{ padding: clamp(40px,7vw,72px) clamp(20px,5vw,64px) clamp(32px,5vw,48px); text-align:center; }
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace; font-size:11px; letter-spacing:3px;
+    color: var(--gold); text-transform:uppercase;
+  }
+  .hero h2{
+    font-family:'Amiri', serif; font-weight:700; font-size: clamp(30px, 5.5vw, 56px);
+    margin: 16px 0 12px; line-height:1.3;
+  }
+  .hero h2 em{ font-style:italic; color: var(--teal); }
+  .hero p.sub{ max-width: 640px; margin: 0 auto; color: var(--ink-soft); font-size:15.5px; }
+  .hero-divider{
+    display:flex; align-items:center; justify-content:center; gap:14px;
+    margin-top: 26px; color: var(--ink-soft); font-size:12px;
+  }
+  .hero-divider .bar{ width:60px; height:1px; background:var(--line); }
+
+  nav.toc{ position: sticky; top:0; z-index:10; background: var(--parchment); border-bottom:1px solid var(--line); }
+  .toc-group-label{
+    font-family:'JetBrains Mono', monospace; font-size:10px; letter-spacing:2px;
+    color: var(--ink-soft); text-align:center; padding: 8px 12px 0;
+  }
+  .toc-row{
+    display:flex; flex-wrap:wrap; justify-content:center; border-top:1px solid var(--line);
+  }
+  .toc-row:first-of-type{ border-top:none; }
+  .toc-btn{
+    font-family:'Cairo', sans-serif; font-weight:600; font-size:13px;
+    padding: 11px 16px; background:none; border:none; cursor:pointer;
+    color: var(--ink-soft); border-left:1px solid var(--line);
+    position:relative; transition: color .2s, background .2s; white-space:nowrap;
+  }
+  .toc-btn:first-child{ border-left:none; }
+  .toc-btn:hover{ color: var(--ink); background: rgba(169,120,47,0.06); }
+  .toc-btn.active{ color: var(--ink); background: var(--paper-card); }
+  .toc-btn.active::after{
+    content:""; position:absolute; bottom:-1px; left:0; right:0; height:2px; background: var(--gold);
+  }
+  .toc-btn .count{ font-family:'JetBrains Mono', monospace; font-size:10px; color: var(--gold); margin-inline-start:5px; }
+
+  main{ max-width: 1140px; margin: 0 auto; padding: 36px 20px 100px; }
+  .section-group{ margin-bottom: 52px; }
+  .group-head{
+    display:flex; align-items:baseline; gap:16px; margin-bottom:6px;
+    padding-bottom:10px; border-bottom: 1px solid var(--line);
+  }
+  .group-head .num{ font-family:'Amiri', serif; font-size:15px; color:var(--gold); font-weight:700; }
+  .group-head h3{ font-family:'Amiri', serif; font-size: 23px; font-weight:700; }
+  .group-head p{ font-size:12px; color: var(--ink-soft); margin-inline-start:auto; }
+  .group-intro{ font-size:13.5px; color: var(--ink-soft); max-width:760px; margin: 12px 0 22px; line-height:1.9; }
+
+  .grid{ display:grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 16px; }
+
+  .card{
+    background: var(--paper-card); border: 1px solid var(--line);
+    padding: 17px 17px 15px; display:flex; flex-direction:column; gap:9px;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .card:hover{ transform: translateY(-3px); box-shadow: 0 10px 24px rgba(36,29,20,0.10); border-color: var(--gold); }
+  .card .tag{
+    align-self:flex-start; font-family:'JetBrains Mono', monospace; font-size:10px; letter-spacing:.5px;
+    padding: 3px 9px; border:1px solid currentColor; border-radius:20px;
+  }
+  .tag.relig{ color: var(--gold); }
+  .tag.tech{ color: var(--teal); }
+
+  .card h4{ font-family:'Amiri', serif; font-size: 17px; font-weight:700; line-height:1.4; }
+  .card .author{ font-size: 12px; color: var(--ink-soft); }
+  .card .desc{
+    font-size: 12px; color: var(--ink-soft); line-height:1.85;
+    display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .card .foot{
+    margin-top:auto; display:flex; align-items:center; justify-content:space-between;
+    padding-top: 9px; border-top: 1px dashed var(--line);
+  }
+  .card .foot .meta{ font-family:'JetBrains Mono', monospace; font-size:10px; color: var(--ink-soft); }
+  .card .dl{
+    font-size:12px; font-weight:700; color: var(--ink); text-decoration:none;
+    display:flex; align-items:center; gap:5px; padding: 6px 11px; border:1px solid var(--ink); border-radius:2px;
+    transition: background .15s, color .15s;
+  }
+  .card .dl:hover{ background: var(--ink); color: var(--parchment); }
+
+  .load-more{
+    display:block; margin: 22px auto 0; padding: 10px 26px;
+    background: none; border:1px solid var(--ink); color: var(--ink);
+    font-family:'Cairo', sans-serif; font-weight:700; font-size:13px; cursor:pointer;
+    border-radius:2px; transition: background .15s, color .15s;
+  }
+  .load-more:hover{ background: var(--ink); color: var(--parchment); }
+  .shown-count{
+    text-align:center; font-family:'JetBrains Mono', monospace; font-size:10.5px;
+    color: var(--ink-soft); margin-top:10px;
+  }
+
+  .empty-note{ grid-column: 1/-1; text-align:center; padding: 30px; color: var(--ink-soft); font-size:13px; }
+  footer{ border-top:1px solid var(--line); padding: 26px 20px; text-align:center; font-size:12px; color: var(--ink-soft); }
+
+  @media (max-width:560px){
+    header.top{ flex-direction:column; align-items:stretch; }
+    .search-wrap{ width:100%; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <div class="brand-mark"><span>ق</span></div>
+    <div class="brand-text">
+      <h1>مكتبتي</h1>
+      <p>فهرس شخصي للكتب والمراجع</p>
+    </div>
+  </div>
+  <div class="search-wrap">
+    <input type="text" id="search" placeholder="ابحث عن كتاب، مؤلف، أو موضوع…">
+  </div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">MAKTABATY — INDEX</div>
+  <h2>مكتبة تجمع <em>الوحي والتراث</em><br>مع <em>العلم والتقنية</em></h2>
+  <p class="sub">فهرس واحد لكتب القرآن وقراءاته، والسيرة النبوية، والمتون والشعر العربي، إلى جانب مراجع البرمجة والشبكات والأمن السيبراني والرياضيات والفيزياء والذكاء الاصطناعي.</p>
+  <div class="hero-divider"><span class="bar"></span><span id="total-count">٠ كتاب</span><span class="bar"></span></div>
+</section>
+
+<nav class="toc">
+  <div class="toc-group-label">الفهرس</div>
+  <div class="toc-row" id="toc-all"></div>
+  <div class="toc-row" id="toc-relig"></div>
+  <div class="toc-row" id="toc-tech"></div>
+</nav>
+
+<main id="main"></main>
+
+<footer>
+  هذا فهرس قابل للتوسّع — أضف المزيد من الكتب في ملف البيانات بنفس القالب للوصول لأكثر من ١٠٠٠ كتاب.
+</footer>
+
+<script>
+/* ======================================================
+   بيانات الكتب — كل كتاب: العنوان، المؤلف، الوصف، القسم الفرعي،
+   المجموعة (relig = تراث ديني/عربي | tech = علوم وتقنية)، ورابط التحميل
+   عدّل أو أضف عناصر بنفس القالب لتوسيع المكتبة إلى أكثر من ١٠٠٠ كتاب
+   ====================================================== */
+const BOOKS = [
+
+/* ---------------- القرآن الكريم وقراءاته (الروايات العشرون) ---------------- */
+{title:"رواية ورش عن نافع",author:"طريق الأزرق",desc:"من أوسع الروايات انتشارًا في المغرب العربي وغرب إفريقيا، بأحكام خاصة في المدود والهمز.",section:"quran",group:"relig",url:"https://pdf.quran.ws/warsh"},
+{title:"رواية قالون عن نافع",author:"",desc:"الرواية الثانية عن نافع المدني، معتمدة في ليبيا وتونس وأجزاء من إفريقيا.",section:"quran",group:"relig",url:"https://pdf.quran.ws/qalun"},
+{title:"رواية حفص عن عاصم",author:"",desc:"الرواية الأكثر انتشارًا اليوم في العالم الإسلامي، معتمدة في أغلب المصاحف المطبوعة.",section:"quran",group:"relig",url:"https://pdf.quran.ws/hafs"},
+{title:"رواية شعبة عن عاصم",author:"",desc:"الرواية الثانية عن عاصم الكوفي، تشترك مع حفص في الأصل مع فروق أدائية.",section:"quran",group:"relig",url:"https://pdf.quran.ws/shubah"},
+{title:"رواية الدوري عن أبي عمرو",author:"",desc:"إحدى روايتي أبي عمرو البصري، معروفة بأحكام الإدغام الكبير.",section:"quran",group:"relig",url:"https://pdf.quran.ws/douri"},
+{title:"رواية السوسي عن أبي عمرو",author:"",desc:"الرواية الثانية عن أبي عمرو البصري، منتشرة في السودان وتشاد.",section:"quran",group:"relig",url:"#"},
+{title:"رواية هشام عن ابن عامر",author:"",desc:"إحدى روايتي ابن عامر الدمشقي، من قراء الشام.",section:"quran",group:"relig",url:"#"},
+{title:"رواية ابن ذكوان عن ابن عامر",author:"",desc:"الرواية الثانية عن ابن عامر الشامي.",section:"quran",group:"relig",url:"#"},
+{title:"رواية البزي عن ابن كثير",author:"",desc:"إحدى روايتي ابن كثير المكي، من القراء السبعة المشهورين.",section:"quran",group:"relig",url:"#"},
+{title:"رواية قنبل عن ابن كثير",author:"",desc:"الرواية الثانية عن ابن كثير المكي.",section:"quran",group:"relig",url:"#"},
+{title:"رواية خلف عن حمزة",author:"",desc:"إحدى روايتي حمزة الزيات الكوفي.",section:"quran",group:"relig",url:"#"},
+{title:"رواية خلاد عن حمزة",author:"",desc:"الرواية الثانية عن حمزة الزيات.",section:"quran",group:"relig",url:"#"},
+{title:"رواية أبي الحارث عن الكسائي",author:"",desc:"إحدى روايتي الكسائي الكوفي، آخر القراء السبعة.",section:"quran",group:"relig",url:"#"},
+{title:"رواية الدوري عن الكسائي",author:"",desc:"الرواية الثانية عن الكسائي.",section:"quran",group:"relig",url:"#"},
+{title:"رواية رويس عن يعقوب",author:"",desc:"إحدى روايتي يعقوب الحضرمي، من القراء العشرة.",section:"quran",group:"relig",url:"#"},
+{title:"رواية روح عن يعقوب",author:"",desc:"الرواية الثانية عن يعقوب الحضرمي.",section:"quran",group:"relig",url:"#"},
+{title:"رواية إسحاق عن خلف العاشر",author:"",desc:"إحدى روايتي خلف العاشر، تمام القراء العشرة المتواترة.",section:"quran",group:"relig",url:"#"},
+{title:"رواية إدريس عن خلف العاشر",author:"",desc:"الرواية الثانية عن خلف العاشر.",section:"quran",group:"relig",url:"#"},
+{title:"التفسير الميسر",author:"مجمع الملك فهد",desc:"تفسير موجز ومبسط لمعاني القرآن الكريم، معتمد للقراءة الميسرة.",section:"quran",group:"relig",url:"#"},
+{title:"تفسير ابن كثير",author:"ابن كثير",desc:"من أشهر كتب التفسير بالمأثور، يعتمد على القرآن والسنة وأقوال الصحابة.",section:"quran",group:"relig",url:"#"},
+{title:"تفسير الطبري (جامع البيان)",author:"محمد بن جرير الطبري",desc:"أقدم تفسير كامل وصل إلينا، ومرجع أساسي في التفسير بالمأثور.",section:"quran",group:"relig",url:"#"},
+{title:"في ظلال القرآن",author:"سيد قطب",desc:"تفسير أدبي وحركي معاصر يربط معاني الآيات بالواقع.",section:"quran",group:"relig",url:"#"},
+{title:"أحكام التجويد الميسرة",author:"",desc:"مدخل عملي لقواعد التجويد: المخارج، الصفات، أحكام النون والميم الساكنة.",section:"quran",group:"relig",url:"#"},
+
+/* ---------------- السيرة النبوية ---------------- */
+{title:"الرحيق المختوم",author:"صفي الرحمن المباركفوري",desc:"سيرة نبوية فازت بالجائزة الأولى في مسابقة رابطة العالم الإسلامي، تجمع الدقة العلمية بأسلوب سردي سلس.",section:"sira",group:"relig",url:"https://archive.org/details/sealed_nectar"},
+{title:"السيرة النبوية لابن هشام",author:"ابن هشام",desc:"تهذيب لسيرة ابن إسحاق، من أقدم وأوثق مصادر السيرة النبوية.",section:"sira",group:"relig",url:"https://archive.org/details/Sirat_Ibn_Hisham"},
+{title:"السيرة النبوية",author:"ابن إسحاق",desc:"أقدم تدوين متكامل لسيرة النبي ﷺ، وصل إلينا عبر رواية ابن هشام أساسًا.",section:"sira",group:"relig",url:"#"},
+{title:"الشمائل المحمدية",author:"الترمذي",desc:"جمع لصفات النبي ﷺ الخَلقية والخُلقية من الأحاديث الصحيحة.",section:"sira",group:"relig",url:"#"},
+{title:"زاد المعاد في هدي خير العباد",author:"ابن القيم الجوزية",desc:"موسوعة في السيرة والفقه المستمد من هدي النبي ﷺ في شؤون حياته كافة.",section:"sira",group:"relig",url:"#"},
+{title:"فقه السيرة",author:"محمد الغزالي",desc:"قراءة تحليلية لأحداث السيرة تربطها بدروس فقهية ودعوية معاصرة.",section:"sira",group:"relig",url:"#"},
+{title:"فقه السيرة النبوية",author:"محمد سعيد رمضان البوطي",desc:"عرض منهجي لأحداث السيرة مع تحليل فقهي وتاريخي دقيق.",section:"sira",group:"relig",url:"#"},
+{title:"السيرة النبوية في ضوء المصادر الأصلية",author:"مهدي رزق الله أحمد",desc:"دراسة أكاديمية للسيرة اعتمادًا على المصادر الأولى ونقدها.",section:"sira",group:"relig",url:"#"},
+{title:"نور اليقين في سيرة سيد المرسلين",author:"محمد الخضري بك",desc:"عرض مختصر وواضح لسيرة النبي ﷺ، شائع في المناهج التعليمية.",section:"sira",group:"relig",url:"#"},
+{title:"الفصول في سيرة الرسول",author:"ابن كثير",desc:"اختصار لسيرة النبي ﷺ من كتابه الكبير البداية والنهاية.",section:"sira",group:"relig",url:"#"},
+{title:"عبقرية محمد",author:"عباس محمود العقاد",desc:"دراسة أدبية وفكرية تحلل شخصية النبي ﷺ القيادية والإنسانية.",section:"sira",group:"relig",url:"#"},
+{title:"حياة محمد",author:"محمد حسين هيكل",desc:"سيرة نبوية بأسلوب أدبي حديث، ركّزت على الرد على شبهات المستشرقين.",section:"sira",group:"relig",url:"#"},
+
+/* ---------------- المتون العلمية (علوم القراءات) ---------------- */
+{title:"متن الشاطبية (حرز الأماني ووجه التهاني)",author:"الإمام أبو القاسم الشاطبي",desc:"أرجوزة شعرية في القراءات السبع، تُعد المرجع الأول الذي يحفظه طلاب علم القراءات لضبط أصول واختلافات القراء السبعة.",section:"matn",group:"relig",url:"https://archive.org/details/shatibiah_Quraan"},
+{title:"متن الدرة المضية في القراءات الثلاث",author:"ابن الجزري",desc:"متن يكمّل الشاطبية بإضافة القراءات الثلاث المتممة للعشر.",section:"matn",group:"relig",url:"#"},
+{title:"متن طيبة النشر في القراءات العشر",author:"ابن الجزري",desc:"أرجوزة موسّعة تضم القراءات العشر المتواترة كاملة.",section:"matn",group:"relig",url:"#"},
+{title:"تحفة الأطفال",author:"سليمان الجمزوري",desc:"متن مختصر وسهل الحفظ في أحكام التجويد الأساسية، يُعلَّم للمبتدئين.",section:"matn",group:"relig",url:"#"},
+{title:"المقدمة الجزرية",author:"ابن الجزري",desc:"متن مختصر في أصول التجويد، يلي تحفة الأطفال في مراحل التعلم.",section:"matn",group:"relig",url:"#"},
+{title:"عقيلة أتراب القصائد في رسم المصاحف",author:"الإمام الشاطبي",desc:"متن في علم رسم المصحف العثماني، مكمّل لعلم القراءات.",section:"matn",group:"relig",url:"#"},
+
+/* ---------------- الفقه المالكي وأصوله ---------------- */
+{title:"الموطأ",author:"الإمام مالك بن أنس",desc:"أصل مذهب المالكية، وأقدم كتب الحديث والفقه المدوّنة، يجمع بين الحديث النبوي وفقه أهل المدينة.",section:"maliki",group:"relig",url:"https://archive.org/details/MuwattaImamMalik_201904"},
 {title:"المدونة الكبرى",author:"رواية سحنون عن ابن القاسم عن مالك",desc:"الأصل الثاني بعد الموطأ في المذهب المالكي، تجمع مسائل الإمام مالك المروية عن تلاميذه.",section:"maliki",group:"relig",url:"#"},
 {title:"الرسالة",author:"ابن أبي زيد القيرواني",desc:"من أوائل وأشهر مختصرات الفقه المالكي، اعتمد عليها التعليم في المغرب الإسلامي قرونًا طويلة.",section:"maliki",group:"relig",url:"#"},
 {title:"متن ابن عاشر — المرشد المعين",author:"عبد الواحد بن عاشر",desc:"منظومة تجمع العقيدة والفقه المالكي والتصوف، من أشهر المتون تدريسًا في المغرب وموريتانيا وغرب إفريقيا.",section:"maliki",group:"relig",url:"https://archive.org/details/IbnAsherVer3"},
